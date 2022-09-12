@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet author="rexdantas@gmail.com" id="001">
+        <createTable tableName="Cargo">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CargoPK" />
+            </column>
+            <column name="nome" type="VARCHAR(50)" />
+            <column name="codigoCentroCusto" type="varchar(20)" />
+            <column name="descricaoCentroCusto" type="varchar(50)" />
+        </createTable>
+
+        <createTable tableName="Autonomo">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="AutonomoPK" />
+            </column>
+            <column name="nome" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="cpf" type="varchar(11)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="banco" type="varchar(20)" />
+            <column name="agencia" type="int" />
+            <column name="conta" type="int" />
+            <column name="operacao" type="varchar(3)" />
+            <column name="pix" type="varchar(20)" />
+        </createTable>
+
+        <createTable tableName="Contrato">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ContratoPK" />
+            </column>
+            <column name="vigenciaInicio" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vigenciaFim" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valorVT" type="decimal" />
+            <column name="valorVR" type="decimal" />
+            <column name="valorDiaria" type="decimal" />
+            <column name="encerrado" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idAutonomo" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="ContratoAutonomoFK"
+                             referencedTableName="Autonomo"
+                             referencedColumnNames="id"
+                             validateForeignKey="true" />
+            </column>
+            <column name="idCargo" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="ContratoCargoFK"
+                             referencedTableName="Cargo"
+                             referencedColumnNames="id"
+                             validateForeignKey="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="Diaria">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="DiariaPK" />
+            </column>
+            <column name="data" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valorVT" type="decimal" />
+            <column name="valorVR" type="decimal" />
+            <column name="valorDiaria" type="decimal" />
+            <column name="observacao" type="varchar(100)" />
+            <column name="idContrato" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="DiariaContratoFK"
+                             referencedTableName="Contrato"
+                             referencedColumnNames="id"
+                             validateForeignKey="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="Pagamento">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoPK" />
+            </column>
+            <column name="data" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor" type="decimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idContrato" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="PagamentoContratoFK"
+                             referencedTableName="Contrato"
+                             referencedColumnNames="id"
+                             validateForeignKey="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="PagamentoDiaria">
+            <column name="idPagamento" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoDiariaPK"/>
+            </column>
+            <column name="idDiaria" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoDiariaPK"/>
+            </column>
+            <column name="pagouValorVT" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pagouValorVR" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pagouValorDiaria" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addForeignKeyConstraint baseTableName="PagamentoDiaria"
+                                 baseColumnNames="idPagamento"
+                                 constraintName="PagamentoDiaria_PagamentoFK"
+                                 referencedTableName="Pagamento"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="PagamentoDiaria"
+                                 baseColumnNames="idDiaria"
+                                 constraintName="PagamentoDiaria_DiariaFK"
+                                 referencedTableName="Diaria"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>
