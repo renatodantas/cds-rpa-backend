@@ -2,18 +2,29 @@ package com.rexus.cdsrpa.cargo.infra.db;
 
 import com.rexus.cdsrpa.cargo.domain.Cargo;
 import com.rexus.cdsrpa.cargo.domain.CargoRepository;
+import com.rexus.cdsrpa.shared.PaginationInput;
+import com.rexus.cdsrpa.shared.PaginationOutput;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.List;
 
 @ApplicationScoped
 public class PanacheCargoRepository implements CargoRepository, PanacheRepositoryBase<Cargo, Integer> {
 
     @Override
-    public List<Cargo> listar() {
-        return listAll(Sort.by("nome"));
+    public PaginationOutput<Cargo> listar(PaginationInput pagination) {
+        final var page = pagination.getPageOrDefault();
+        final var itens = findAll(pagination
+                .getSortOrDefault("nome"))
+                .page(page);
+        final var count = itens.pageCount();
+        return new PaginationOutput<>(
+                itens.list(),
+                page.index,
+                page.size,
+                count,
+                itens.count()
+        );
     }
 
     @Override

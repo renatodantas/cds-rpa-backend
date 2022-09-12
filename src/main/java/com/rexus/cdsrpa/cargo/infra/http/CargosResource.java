@@ -4,11 +4,12 @@ import com.rexus.cdsrpa.cargo.domain.Cargo;
 import com.rexus.cdsrpa.cargo.domain.CargoRepository;
 import com.rexus.cdsrpa.cargo.dto.CargoDto;
 import com.rexus.cdsrpa.cargo.usecase.*;
+import com.rexus.cdsrpa.shared.PaginationInput;
+import com.rexus.cdsrpa.shared.PaginationOutput;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Optional;
 
 @Path("cargos")
@@ -29,8 +30,8 @@ public class CargosResource {
     }
 
     @GET
-    public List<Cargo> findAll() {
-        return this.findAllCargos.execute();
+    public PaginationOutput<Cargo> findAll(@BeanParam PaginationInput pagination) {
+        return this.findAllCargos.execute(pagination);
     }
 
     @GET

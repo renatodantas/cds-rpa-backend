@@ -1,10 +1,11 @@
 package com.rexus.cdsrpa.cargo.domain;
 
-import java.util.List;
+import com.rexus.cdsrpa.shared.PaginationInput;
+import com.rexus.cdsrpa.shared.PaginationOutput;
 
 public interface CargoRepository {
 
-    List<Cargo> listar();
+    PaginationOutput<Cargo> listar(PaginationInput pagination);
     void create(Cargo cargo);
     void update(Cargo cargo);
     void remove(int id);
