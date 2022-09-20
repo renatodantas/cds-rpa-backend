@@ -13,7 +13,7 @@ public class CreateCargo {
     }
 
     public void execute(CargoDto dto) {
-        final var cargo = new Cargo(dto.nome, dto.codigoCentroCusto, dto.descricaoCentroCusto);
+        final var cargo = new Cargo(dto.nome, dto.centroCustoCodigo, dto.centroCustoDescricao);
         cargoRepository.create(cargo);
     }
 }

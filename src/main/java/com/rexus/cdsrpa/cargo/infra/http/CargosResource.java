@@ -9,7 +9,6 @@ import com.rexus.cdsrpa.shared.PaginationOutput;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 @Path("cargos")
@@ -41,14 +40,19 @@ public class CargosResource {
     }
 
     @POST
-    public Response createCargo(@Valid CargoDto cargo) {
+    public void createCargo(@Valid CargoDto cargo) {
         createCargo.execute(cargo);
-        return Response.status(Response.Status.CREATED).build();
     }
 
     @PATCH
     @Path("{id}")
     public void updateCargo(@PathParam("id") int id, @Valid CargoDto cargoDto) {
         updateCargo.execute(id, cargoDto);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeCargo(@PathParam("id") int id) {
+        removeCargo.execute(id);
     }
 }

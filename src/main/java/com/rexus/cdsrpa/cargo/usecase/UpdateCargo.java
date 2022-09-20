@@ -20,8 +20,8 @@ public class UpdateCargo {
         final var cargo = new Cargo();
         cargo.id = id;
         cargo.nome = dto.nome;
-        cargo.codigoCentroCusto = dto.codigoCentroCusto;
-        cargo.descricaoCentroCusto = dto.descricaoCentroCusto;
+        cargo.codigoCentroCusto = dto.centroCustoCodigo;
+        cargo.descricaoCentroCusto = dto.centroCustoDescricao;
         cargoRepository.update(cargo);
     }
 }
