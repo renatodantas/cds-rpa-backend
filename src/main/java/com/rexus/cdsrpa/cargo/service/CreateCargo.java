@@ -1,7 +1,7 @@
-package com.rexus.cdsrpa.cargo.usecase;
+package com.rexus.cdsrpa.cargo.service;
 
-import com.rexus.cdsrpa.cargo.domain.Cargo;
-import com.rexus.cdsrpa.cargo.domain.CargoRepository;
+import com.rexus.cdsrpa.cargo.entity.Cargo;
+import com.rexus.cdsrpa.cargo.repository.CargoRepository;
 import com.rexus.cdsrpa.cargo.dto.CargoDto;
 
 public class CreateCargo {

@@ -1,18 +1,18 @@
-package com.rexus.cdsrpa.cargo.infra.db;
+package com.rexus.cdsrpa.cargo.repository;
 
-import com.rexus.cdsrpa.cargo.domain.Cargo;
-import com.rexus.cdsrpa.cargo.domain.CargoRepository;
+import com.rexus.cdsrpa.cargo.entity.Cargo;
 import com.rexus.cdsrpa.shared.PaginationInput;
 import com.rexus.cdsrpa.shared.PaginationOutput;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.Optional;
 
 @ApplicationScoped
 public class PanacheCargoRepository implements CargoRepository, PanacheRepositoryBase<Cargo, Integer> {
 
     @Override
-    public PaginationOutput<Cargo> listar(PaginationInput pagination) {
+    public PaginationOutput<Cargo> findAll(PaginationInput pagination) {
         final var page = pagination.getPageOrDefault();
         final var itens = findAll(pagination
                 .getSortOrDefault("nome"))
@@ -25,6 +25,11 @@ public class PanacheCargoRepository implements CargoRepository, PanacheRepositor
                 count,
                 itens.count()
         );
+    }
+
+    @Override
+    public Optional<Cargo> findById(int id) {
+        return findByIdOptional(id);
     }
 
     @Override

@@ -1,9 +1,9 @@
-package com.rexus.cdsrpa.cargo.infra.http;
+package com.rexus.cdsrpa.cargo.api;
 
-import com.rexus.cdsrpa.cargo.domain.Cargo;
-import com.rexus.cdsrpa.cargo.domain.CargoRepository;
+import com.rexus.cdsrpa.cargo.entity.Cargo;
+import com.rexus.cdsrpa.cargo.repository.CargoRepository;
 import com.rexus.cdsrpa.cargo.dto.CargoDto;
-import com.rexus.cdsrpa.cargo.usecase.*;
+import com.rexus.cdsrpa.cargo.service.*;
 import com.rexus.cdsrpa.shared.PaginationInput;
 import com.rexus.cdsrpa.shared.PaginationOutput;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.*;
 import java.util.Optional;
 
 @Path("cargos")
-public class CargosResource {
+public class CargosApi {
 
     private final FindAllCargos findAllCargos;
     private final FindOneCargo findOneCargo;
@@ -20,7 +20,7 @@ public class CargosResource {
     private final UpdateCargo updateCargo;
     private final RemoveCargo removeCargo;
 
-    CargosResource(final CargoRepository cargoRepository) {
+    CargosApi(final CargoRepository cargoRepository) {
         this.findAllCargos = new FindAllCargos(cargoRepository);
         this.findOneCargo = new FindOneCargo(cargoRepository);
         this.createCargo = new CreateCargo(cargoRepository);

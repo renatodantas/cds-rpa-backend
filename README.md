@@ -1,4 +1,4 @@
-# code-with-quarkus Project
+# CDS RPA (backend)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -47,10 +47,16 @@ You can then execute your native executable with: `./target/code-with-quarkus-1.
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
-## Provided Code
+## Database
 
-### RESTEasy Reactive
+To start a fresh database using Docker, run the following command:
 
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+```shell
+docker run \
+  --platform linux/arm64 \ # Only for Macs with M1 chip
+  --name cds-rpa-db \
+  -p 5432:5432 \
+  -v cds-rpa:/var/lib/postgresql/data \
+  -e POSTGRES_PASSWORD=Rpa#Develop \
+  postgres:14-alpine
+```

@@ -1,7 +1,7 @@
 package com.rexus.cdsrpa.contrato;
 
 import com.rexus.cdsrpa.autonomo.Autonomo;
-import com.rexus.cdsrpa.cargo.domain.Cargo;
+import com.rexus.cdsrpa.cargo.entity.Cargo;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
-package com.rexus.cdsrpa.cargo.usecase;
+package com.rexus.cdsrpa.cargo.service;
 
-import com.rexus.cdsrpa.cargo.domain.CargoRepository;
+import com.rexus.cdsrpa.cargo.repository.CargoRepository;
 import com.rexus.cdsrpa.exception.ItemNaoEncontradoException;
 
 public class RemoveCargo {

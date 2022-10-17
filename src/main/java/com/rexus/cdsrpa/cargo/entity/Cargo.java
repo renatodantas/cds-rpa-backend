@@ -1,4 +1,4 @@
-package com.rexus.cdsrpa.cargo.domain;
+package com.rexus.cdsrpa.cargo.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
