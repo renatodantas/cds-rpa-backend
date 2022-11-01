@@ -5,132 +5,132 @@
                        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet author="rexdantas@gmail.com" id="001">
-        <createTable tableName="Cargo">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="CargoPK" />
+        <createTable tableName="tb_cargo">
+            <column name="id_cargo" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_cargo" />
             </column>
-            <column name="nome" type="VARCHAR(50)" />
-            <column name="codigoCentroCusto" type="varchar(20)" />
-            <column name="descricaoCentroCusto" type="varchar(50)" />
-        </createTable>
-
-        <createTable tableName="Autonomo">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="AutonomoPK" />
-            </column>
-            <column name="nome" type="varchar(50)">
-                <constraints nullable="false" />
-            </column>
-            <column name="cpf" type="varchar(11)">
+            <column name="nm_cargo" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true" />
             </column>
-            <column name="banco" type="varchar(20)" />
-            <column name="agencia" type="int" />
-            <column name="conta" type="int" />
-            <column name="operacao" type="varchar(3)" />
-            <column name="pix" type="varchar(20)" />
+            <column name="cd_centro_custo" type="varchar(20)" />
+            <column name="ds_centro_custo" type="varchar(50)" />
         </createTable>
 
-        <createTable tableName="Contrato">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="ContratoPK" />
+        <createTable tableName="tb_autonomo">
+            <column name="id_autonomo" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_autonomo" />
             </column>
-            <column name="vigenciaInicio" type="date">
-                <constraints nullable="false"/>
+            <column name="nm_autonomo" type="varchar(50)">
+                <constraints nullable="false" />
             </column>
-            <column name="vigenciaFim" type="date">
-                <constraints nullable="false"/>
+            <column name="nr_cpf" type="varchar(11)">
+                <constraints nullable="false" unique="true" />
             </column>
-            <column name="valorVT" type="decimal" />
-            <column name="valorVR" type="decimal" />
-            <column name="valorDiaria" type="decimal" />
-            <column name="encerrado" type="boolean" defaultValueBoolean="false">
-                <constraints nullable="false"/>
-            </column>
-            <column name="idAutonomo" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="ContratoAutonomoFK"
-                             referencedTableName="Autonomo"
-                             referencedColumnNames="id"
-                             validateForeignKey="true" />
-            </column>
-            <column name="idCargo" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="ContratoCargoFK"
-                             referencedTableName="Cargo"
-                             referencedColumnNames="id"
-                             validateForeignKey="true" />
-            </column>
+            <column name="nm_banco" type="varchar(20)" />
+            <column name="nr_agencia" type="int" />
+            <column name="nr_conta" type="int" />
+            <column name="nr_operacao" type="varchar(3)" />
+            <column name="cd_pix" type="varchar(20)" />
         </createTable>
 
-        <createTable tableName="Diaria">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="DiariaPK" />
+        <createTable tableName="tb_contrato">
+            <column name="id_contrato" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contrato" />
             </column>
-            <column name="data" type="date">
+            <column name="dt_vigencia_inicio" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="valorVT" type="decimal" />
-            <column name="valorVR" type="decimal" />
-            <column name="valorDiaria" type="decimal" />
-            <column name="observacao" type="varchar(100)" />
-            <column name="idContrato" type="int">
+            <column name="dt_vigencia_fim" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vl_vt" type="decimal" />
+            <column name="vl_vr" type="decimal" />
+            <column name="vl_diaria" type="decimal" />
+            <column name="is_encerrado" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_autonomo" type="int">
                 <constraints nullable="false"
-                             foreignKeyName="DiariaContratoFK"
-                             referencedTableName="Contrato"
-                             referencedColumnNames="id"
+                             foreignKeyName="fk_contrato_autonomo"
+                             referencedTableName="tb_autonomo"
+                             referencedColumnNames="id_autonomo"
+                             validateForeignKey="true" />
+            </column>
+            <column name="id_cargo" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_contrato_cargo"
+                             referencedTableName="tb_cargo"
+                             referencedColumnNames="id_cargo"
                              validateForeignKey="true" />
             </column>
         </createTable>
 
-        <createTable tableName="Pagamento">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoPK" />
+        <createTable tableName="tb_diaria">
+            <column name="id_diaria" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_diaria" />
             </column>
-            <column name="data" type="date">
+            <column name="dt_diaria" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="valor" type="decimal">
-                <constraints nullable="false"/>
-            </column>
-            <column name="idContrato" type="int">
+            <column name="vl_vt" type="decimal" />
+            <column name="vl_vr" type="decimal" />
+            <column name="vl_diaria" type="decimal" />
+            <column name="tx_observacao" type="varchar(100)" />
+            <column name="id_contrato" type="int">
                 <constraints nullable="false"
-                             foreignKeyName="PagamentoContratoFK"
-                             referencedTableName="Contrato"
-                             referencedColumnNames="id"
+                             foreignKeyName="fk_diaria_contrato"
+                             referencedTableName="tb_contrato"
+                             referencedColumnNames="id_contrato"
                              validateForeignKey="true" />
             </column>
         </createTable>
 
-        <createTable tableName="PagamentoDiaria">
-            <column name="idPagamento" type="int">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoDiariaPK"/>
+        <createTable tableName="tb_pagamento">
+            <column name="id_pagamento" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pagamento" />
             </column>
-            <column name="idDiaria" type="int">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PagamentoDiariaPK"/>
-            </column>
-            <column name="pagouValorVT" type="boolean">
+            <column name="dt_pagamento" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="pagouValorVR" type="boolean">
+            <column name="vl_pagamento" type="decimal">
                 <constraints nullable="false"/>
             </column>
-            <column name="pagouValorDiaria" type="boolean">
-                <constraints nullable="false"/>
+            <column name="id_contrato" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_pagamento_contrato"
+                             referencedTableName="tb_contrato"
+                             referencedColumnNames="id_contrato"
+                             validateForeignKey="true" />
             </column>
         </createTable>
-        
-        <addForeignKeyConstraint baseTableName="PagamentoDiaria"
-                                 baseColumnNames="idPagamento"
-                                 constraintName="PagamentoDiaria_PagamentoFK"
-                                 referencedTableName="Pagamento"
-                                 referencedColumnNames="id" />
 
-        <addForeignKeyConstraint baseTableName="PagamentoDiaria"
-                                 baseColumnNames="idDiaria"
-                                 constraintName="PagamentoDiaria_DiariaFK"
-                                 referencedTableName="Diaria"
-                                 referencedColumnNames="id" />
+        <createTable tableName="tb_pagamento_diaria">
+            <column name="id_pagamento" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pagamento_diaria1"/>
+            </column>
+            <column name="id_diaria" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pagamento_diaria2"/>
+            </column>
+            <column name="is_pagou_vt" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_pagou_vr" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_pagou_diaria" type="boolean">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tb_pagamento_diaria"
+                                 baseColumnNames="id_pagamento"
+                                 constraintName="fk_pd_pagamento"
+                                 referencedTableName="tb_pagamento"
+                                 referencedColumnNames="id_pagamento" />
+        <addForeignKeyConstraint baseTableName="tb_pagamento_diaria"
+                                 baseColumnNames="id_diaria"
+                                 constraintName="fk_pd_diaria"
+                                 referencedTableName="tb_diaria"
+                                 referencedColumnNames="id_diaria" />
     </changeSet>
 
 </databaseChangeLog>

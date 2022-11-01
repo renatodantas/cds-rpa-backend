@@ -11,7 +11,7 @@ import javax.ws.rs.QueryParam;
  */
 public class PaginationInput {
 
-    private static final int DEFAULT_PAGE = 1;
+    private static final int DEFAULT_PAGE = 0;
     private static final int DEFAULT_SIZE = 10;
     private static final int MAX_SIZE = 100;
     private static final String DEFAULT_ORDER = "asc";
@@ -38,7 +38,7 @@ public class PaginationInput {
 
     public Page getPageOrDefault() {
         final var thePage = page == null ? DEFAULT_PAGE : page;
-        final var theSize = size == null || size > 100 ? DEFAULT_SIZE : size;
+        final var theSize = size == null || size > MAX_SIZE ? DEFAULT_SIZE : size;
         return Page.of(thePage, theSize);
     }
 }

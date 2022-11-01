@@ -4,14 +4,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tb_cargo")
 public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cargo")
     public Integer id;
-    @Column(nullable = false, unique = true)
+
+    @Column(name = "nm_cargo", nullable = false, unique = true)
     public String nome;
+
+    @Column(name = "cd_centro_custo")
     public String codigoCentroCusto;
+
+    @Column(name = "ds_centro_custo")
     public String descricaoCentroCusto;
 
     public Cargo() {}
