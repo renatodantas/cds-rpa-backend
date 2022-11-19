@@ -1,4 +1,4 @@
-package com.rexus.cdsrpa.autonomo;
+package com.rexus.cdsrpa.autonomo.entity;
 
 import javax.persistence.*;
 
@@ -26,7 +26,7 @@ public class Autonomo {
     @Column(name = "nr_conta")
     public Integer conta;
 
-    @Column(name = "cd_operacao")
+    @Column(name = "nr_operacao")
     public String operacao;
 
     @Column(name = "cd_pix")

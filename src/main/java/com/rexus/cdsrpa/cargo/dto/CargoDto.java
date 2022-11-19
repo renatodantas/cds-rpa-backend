@@ -6,7 +6,7 @@ public class CargoDto {
 
     @NotBlank(message = "O nome é obrigatório")
     public String nome;
-    public String centroCustoCodigo;
-    public String centroCustoDescricao;
+    public String codigoCentroCusto;
+    public String descricaoCentroCusto;
 
 }

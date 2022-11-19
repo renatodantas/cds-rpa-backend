@@ -1,10 +1,12 @@
-package com.rexus.cdsrpa.cargo.service;
+package com.rexus.cdsrpa.cargo.usecase;
 
-import com.rexus.cdsrpa.cargo.entity.Cargo;
+import com.rexus.cdsrpa.cargo.dto.CargoIdDto;
 import com.rexus.cdsrpa.cargo.repository.CargoRepository;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.Optional;
 
+@ApplicationScoped
 public class FindOneCargo {
 
     private final CargoRepository cargoRepository;
@@ -13,7 +15,7 @@ public class FindOneCargo {
         this.cargoRepository = cargoRepository;
     }
 
-    public Optional<Cargo> execute(int id) {
-        return cargoRepository.findById(id);
+    public Optional<CargoIdDto> execute(int id) {
+        return cargoRepository.findCargoById(id);
     }
 }

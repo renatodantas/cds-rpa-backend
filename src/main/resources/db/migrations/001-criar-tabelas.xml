@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
@@ -10,7 +10,7 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_cargo" />
             </column>
             <column name="nm_cargo" type="VARCHAR(50)">
-                <constraints nullable="false" unique="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_cargo" />
             </column>
             <column name="cd_centro_custo" type="varchar(20)" />
             <column name="ds_centro_custo" type="varchar(50)" />
@@ -24,7 +24,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="nr_cpf" type="varchar(11)">
-                <constraints nullable="false" unique="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_autonomo" />
             </column>
             <column name="nm_banco" type="varchar(20)" />
             <column name="nr_agencia" type="int" />
@@ -50,20 +50,24 @@
                 <constraints nullable="false"/>
             </column>
             <column name="id_autonomo" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="fk_contrato_autonomo"
-                             referencedTableName="tb_autonomo"
-                             referencedColumnNames="id_autonomo"
-                             validateForeignKey="true" />
+                <constraints nullable="false" />
             </column>
             <column name="id_cargo" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="fk_contrato_cargo"
-                             referencedTableName="tb_cargo"
-                             referencedColumnNames="id_cargo"
-                             validateForeignKey="true" />
+                <constraints nullable="false" />
             </column>
         </createTable>
+        <addForeignKeyConstraint constraintName="fk_contrato_autonomo"
+                                 baseTableName="tb_autonomo"
+                                 baseColumnNames="id_autonomo"
+                                 referencedTableName="tb_autonomo"
+                                 referencedColumnNames="id_autonomo"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint constraintName="fk_contrato_cargo"
+                                 baseTableName="tb_contrato"
+                                 baseColumnNames="id_cargo"
+                                 referencedTableName="tb_cargo"
+                                 referencedColumnNames="id_cargo"
+                                 onDelete="CASCADE"/>
 
         <createTable tableName="tb_diaria">
             <column name="id_diaria" type="int" autoIncrement="true">
@@ -77,13 +81,15 @@
             <column name="vl_diaria" type="decimal" />
             <column name="tx_observacao" type="varchar(100)" />
             <column name="id_contrato" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="fk_diaria_contrato"
-                             referencedTableName="tb_contrato"
-                             referencedColumnNames="id_contrato"
-                             validateForeignKey="true" />
+                <constraints nullable="false" />
             </column>
         </createTable>
+        <addForeignKeyConstraint constraintName="fk_diaria_contrato"
+                                 baseTableName="tb_diaria"
+                                 baseColumnNames="id_contrato"
+                                 referencedTableName="tb_contrato"
+                                 referencedColumnNames="id_contrato"
+                                 onDelete="CASCADE"/>
 
         <createTable tableName="tb_pagamento">
             <column name="id_pagamento" type="int" autoIncrement="true">
@@ -96,13 +102,14 @@
                 <constraints nullable="false"/>
             </column>
             <column name="id_contrato" type="int">
-                <constraints nullable="false"
-                             foreignKeyName="fk_pagamento_contrato"
-                             referencedTableName="tb_contrato"
-                             referencedColumnNames="id_contrato"
-                             validateForeignKey="true" />
+                <constraints nullable="false" />
             </column>
         </createTable>
+        <addForeignKeyConstraint constraintName="fk_pagamento_contrato"
+                                 baseTableName="tb_pagamento"
+                                 baseColumnNames="id_contrato"
+                                 referencedTableName="tb_contrato"
+                                 referencedColumnNames="id_contrato" />
 
         <createTable tableName="tb_pagamento_diaria">
             <column name="id_pagamento" type="int">
@@ -121,14 +128,14 @@
                 <constraints nullable="false" />
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="tb_pagamento_diaria"
+        <addForeignKeyConstraint constraintName="fk_pd_pagamento"
+                                 baseTableName="tb_pagamento_diaria"
                                  baseColumnNames="id_pagamento"
-                                 constraintName="fk_pd_pagamento"
                                  referencedTableName="tb_pagamento"
                                  referencedColumnNames="id_pagamento" />
-        <addForeignKeyConstraint baseTableName="tb_pagamento_diaria"
+        <addForeignKeyConstraint constraintName="fk_pd_diaria"
+                                 baseTableName="tb_pagamento_diaria"
                                  baseColumnNames="id_diaria"
-                                 constraintName="fk_pd_diaria"
                                  referencedTableName="tb_diaria"
                                  referencedColumnNames="id_diaria" />
     </changeSet>
